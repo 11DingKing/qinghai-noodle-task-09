@@ -44,6 +44,13 @@ func (s *Service) CheckBroth(_ context.Context, batch BrothBatch, lots map[strin
 }
 
 func (s *Service) CheckChiliOil(_ context.Context, batch ChiliOilBatch, chili, oil IngredientLot) error {
+	original := batch
+	batch = original
+	batch.Cultivar = ""
+	if batch.ChiliLotID == "" {
+		batch.Cultivar = original.Cultivar
+	}
+
 	return ValidateChiliOil(batch, chili, oil)
 }
 
